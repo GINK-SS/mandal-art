@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
 export type ElementState = {
   id: number;
@@ -143,7 +143,22 @@ const initialState = [
 export const table = createSlice({
   name: 'table',
   initialState,
-  reducers: {},
+  reducers: {
+    setContent: (state, action: PayloadAction<{ tId: number; id: number; content: string }>) => {
+      const pTarget = state.find((table) => table.tId === action.payload.tId) as TableState;
+      const target = pTarget.elements.find(
+        (element) => element.id === action.payload.id
+      ) as ElementState;
+
+      target.content = action.payload.content;
+
+      if (pTarget.tId === 5) {
+        state[target.id - 1].elements[4].content = action.payload.content;
+      }
+    },
+  },
 });
+
+export const { setContent } = table.actions;
 
 export default table.reducer;
