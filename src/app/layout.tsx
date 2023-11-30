@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import ReduxProvider from '@/redux/provider';
 
 export const metadata: Metadata = {
   title: '만다라트 계획표 만들기',
@@ -9,7 +10,11 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ko">
-      <body>{children}</body>
+      <body>
+        <ReduxProvider>
+          <div className="max-w-4xl mx-auto">{children}</div>
+        </ReduxProvider>
+      </body>
     </html>
   );
 }
