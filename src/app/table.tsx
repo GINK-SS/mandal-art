@@ -3,31 +3,36 @@ import Textarea from './textarea';
 
 type TableProps = {
   tIdx: number;
+  isActive: boolean;
   elements: ElementState[];
 };
 
-export default function Table({ tIdx, elements }: TableProps) {
+export default function Table({ tIdx, isActive, elements }: TableProps) {
   return (
-    <table className="border-0 border-gray-500">
-      <tbody>
-        {elements.map(
-          (_, index) =>
-            index % 3 === 0 && (
-              <tr key={index} className="flex">
-                {elements.slice(index, index + 3).map((element, index) => (
-                  <td key={index} className="flex items-center justify-center p-0 border">
-                    <Textarea
-                      tId={tId}
-                      id={element.id}
-                      content={element.content}
-                      placeholder={element?.placeholder}
-                    />
-                  </td>
-                ))}
-              </tr>
-            )
-        )}
-      </tbody>
-    </table>
+    <div className="relative">
+      <div className={`absolute z-10 w-full h-full bg-black opacity-30 ${isActive && 'hidden'}`} />
+
+      <table className="border-0 border-gray-500">
+        <tbody>
+          {elements.map(
+            (_, i) =>
+              i % 3 === 0 && (
+                <tr key={i} className="flex">
+                  {elements.slice(i, i + 3).map((element, idx) => (
+                    <td key={idx + i} className="flex items-center justify-center p-0 border">
+                      <Textarea
+                        tIdx={tIdx}
+                        idx={idx + i}
+                        content={element.content}
+                        placeholder={element?.placeholder}
+                      />
+                    </td>
+                  ))}
+                </tr>
+              )
+          )}
+        </tbody>
+      </table>
+    </div>
   );
 }

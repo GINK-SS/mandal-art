@@ -1,5 +1,5 @@
 'use client';
-import { setContent } from '@/redux/slices/table';
+import { setActive, setContent } from '@/redux/slices/table';
 import { AppDispatch } from '@/redux/store';
 import { useDispatch } from 'react-redux';
 
@@ -15,6 +15,7 @@ export default function Textarea({ tIdx, idx, content, placeholder }: TextareaPr
 
   const handleChange = (value: string) => {
     dispatch(setContent({ tIdx, idx, content: value }));
+    dispatch(setActive({ tIdx, idx, content: value }));
   };
 
   return (

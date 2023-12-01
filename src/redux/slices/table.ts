@@ -6,11 +6,13 @@ export type ElementState = {
 };
 
 export type TableState = {
+  isActive: boolean;
   elements: ElementState[];
 };
 
 const initialState = [
   {
+    isActive: false,
     elements: [
       { content: '' },
       { content: '' },
@@ -24,6 +26,7 @@ const initialState = [
     ],
   },
   {
+    isActive: false,
     elements: [
       { content: '' },
       { content: '' },
@@ -37,6 +40,7 @@ const initialState = [
     ],
   },
   {
+    isActive: false,
     elements: [
       { content: '' },
       { content: '' },
@@ -50,6 +54,7 @@ const initialState = [
     ],
   },
   {
+    isActive: false,
     elements: [
       { content: '' },
       { content: '' },
@@ -63,6 +68,7 @@ const initialState = [
     ],
   },
   {
+    isActive: true,
     elements: [
       { content: '', placeholder: '목표 1' },
       { content: '', placeholder: '목표 2' },
@@ -76,6 +82,7 @@ const initialState = [
     ],
   },
   {
+    isActive: false,
     elements: [
       { content: '' },
       { content: '' },
@@ -89,6 +96,7 @@ const initialState = [
     ],
   },
   {
+    isActive: false,
     elements: [
       { content: '' },
       { content: '' },
@@ -102,6 +110,7 @@ const initialState = [
     ],
   },
   {
+    isActive: false,
     elements: [
       { content: '' },
       { content: '' },
@@ -115,6 +124,7 @@ const initialState = [
     ],
   },
   {
+    isActive: false,
     elements: [
       { content: '' },
       { content: '' },
@@ -140,9 +150,19 @@ export const table = createSlice({
         state[action.payload.idx].elements[4].content = action.payload.content;
       }
     },
+
+    setActive: (state, action: PayloadAction<{ tIdx: number; idx: number; content: string }>) => {
+      if (action.payload.tIdx === 4) {
+        if (action.payload.content) {
+          state[action.payload.idx].isActive = true;
+        } else if (action.payload.idx !== 4 && !action.payload.content) {
+          state[action.payload.idx].isActive = false;
+        }
+      }
+    },
   },
 });
 
-export const { setContent } = table.actions;
+export const { setContent, setActive } = table.actions;
 
 export default table.reducer;
