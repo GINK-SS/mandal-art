@@ -15,8 +15,8 @@ export default function Home() {
       </div>
 
       <TableWrapper>
-        {tables.map((table) => (
-          <Table key={table.tId} tId={table.tId} elements={table.elements} />
+        {tables.map((table, tIdx) => (
+          <Table key={tIdx} tIdx={tIdx} elements={table.elements} />
         ))}
       </TableWrapper>
     </>

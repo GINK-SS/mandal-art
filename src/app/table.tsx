@@ -2,11 +2,11 @@ import { ElementState } from '@/redux/slices/table';
 import Textarea from './textarea';
 
 type TableProps = {
-  tId: number;
+  tIdx: number;
   elements: ElementState[];
 };
 
-export default function Table({ tId, elements }: TableProps) {
+export default function Table({ tIdx, elements }: TableProps) {
   return (
     <table className="border-0 border-gray-500">
       <tbody>
