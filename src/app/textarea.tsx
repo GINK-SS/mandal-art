@@ -19,10 +19,17 @@ export default function Textarea({ tId, id, content, placeholder }: TextareaProp
 
   return (
     <textarea
-      className="w-full h-full m-[1px] text-center border-0 resize-none outline-0"
+      className={`w-full h-full m-[1px] text-center border-0 resize-none outline-0 disabled:bg-lime-500
+      ${
+        tId === 4 && id === 4
+          ? 'bg-green-700 text-white placeholder:text-white'
+          : 'placeholder:text-zinc-500'
+      }
+      ${tId === 4 && id !== 4 && 'bg-lime-500'}`}
       value={content}
       placeholder={placeholder}
       onChange={(e) => handleChange(e.target.value)}
+      disabled={id === 4 && tId !== 4}
     />
   );
 }
