@@ -12,7 +12,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="ko">
       <body suppressHydrationWarning={true}>
         <ReduxProvider>
-          <div className="max-w-4xl mx-auto">{children}</div>
+          <div className="max-w-6xl mx-auto">{children}</div>
         </ReduxProvider>
       </body>
     </html>
