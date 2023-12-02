@@ -3,6 +3,10 @@ import type { Config } from 'tailwindcss';
 const config: Config = {
   content: ['./src/**/*.{js,ts,jsx,tsx,mdx}'],
   theme: {
+    fontFamily: {
+      sans: ['Roboto', 'ui-sans-serif', 'Arial', 'system-ui', 'sans-serif'],
+      title: ['Cabin Sketch', 'Roboto', 'sans-serif'],
+    },
     extend: {
       keyframes: {
         bgGradient: {
