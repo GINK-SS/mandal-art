@@ -18,6 +18,13 @@ export default function Element({ tIdx, idx, content, placeholder }: ElementProp
   const [isFocus, setIsFocus] = useState<boolean>(false);
   const [isMouseDown, setIsMouseDown] = useState<boolean>(false);
 
+  const isOverHeight = (textarea: HTMLTextAreaElement, td: HTMLTableCellElement) => {
+    const textareaHeight = textarea.scrollHeight;
+    const tdHeight = parseInt(window.getComputedStyle(td).height);
+
+    return tdHeight < textareaHeight;
+  };
+
   const handleTdClick = () => {
     if (textareaRef.current) textareaRef.current.focus();
   };
@@ -42,6 +49,10 @@ export default function Element({ tIdx, idx, content, placeholder }: ElementProp
   };
 
   const handleChange = (value: string) => {
+    if (textareaRef.current && tdRef.current) {
+      if (isOverHeight(textareaRef.current, tdRef.current)) return;
+    }
+
     dispatch(setContent({ tIdx, idx, content: value }));
     dispatch(setActive({ tIdx, idx, content: value }));
     handleResizeHeight();
