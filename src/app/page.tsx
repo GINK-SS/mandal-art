@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import TypingEffect from './typingEffect';
 
 export default function Home() {
   return (
@@ -12,9 +13,7 @@ export default function Home() {
             Lotus Blossom Technique
           </h2>
 
-          <p className="mb-16 text-2xl font-bold text-transparent bg-gradient-to-r bg-clip-text from-indigo-300 to-purple-400">
-            &apos; 목표를 달성하는 기술 &apos;
-          </p>
+          <TypingEffect />
 
           <Link href="/create">
             <button
