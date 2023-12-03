@@ -35,7 +35,7 @@ export default function Element({ tIdx, idx, content, placeholder }: ElementProp
 
         if (connectTextarea instanceof HTMLTextAreaElement) {
           connectTextarea.style.height = 'auto';
-          connectTextarea.style.height = connectTextarea.scrollHeight + 'px';
+          connectTextarea.style.height = textareaRef.current.scrollHeight + 'px';
         }
       }
     }
