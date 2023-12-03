@@ -24,6 +24,18 @@ export default function Element({ tIdx, idx, content, placeholder }: ElementProp
     if (textareaRef.current) {
       textareaRef.current.style.height = 'auto';
       textareaRef.current.style.height = textareaRef.current.scrollHeight + 'px';
+
+      if (tIdx === 4 && idx !== 4) {
+        const connectTextarea =
+          textareaRef.current.parentElement?.parentElement?.parentElement?.parentElement
+            ?.parentElement?.parentElement?.children[idx].lastChild?.firstChild?.firstChild
+            ?.nextSibling?.firstChild?.nextSibling?.firstChild;
+
+        if (connectTextarea instanceof HTMLTextAreaElement) {
+          connectTextarea.style.height = 'auto';
+          connectTextarea.style.height = connectTextarea.scrollHeight + 'px';
+        }
+      }
     }
   };
 
@@ -38,7 +50,8 @@ export default function Element({ tIdx, idx, content, placeholder }: ElementProp
       ref={tdRef}
       className={`flex items-center justify-center border border-gray-400 cursor-text after:pt-[100%]
       ${tIdx === 4 && idx === 4 && 'bg-indigo-500'}
-      ${((tIdx === 4 && idx !== 4) || (tIdx !== 4 && idx === 4)) && 'bg-purple-300'}`}
+      ${tIdx === 4 && idx !== 4 && 'bg-purple-300'}
+      ${tIdx !== 4 && idx === 4 && 'bg-purple-300 cursor-default'}`}
       onClick={handleTdClick}
     >
       <textarea
