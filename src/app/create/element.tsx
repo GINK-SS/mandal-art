@@ -58,8 +58,11 @@ export default function Element({ tIdx, idx, content, placeholder }: ElementProp
         ref={textareaRef}
         rows={1}
         className={`w-full text-center resize-none outline-0 bg-transparent
-    ${tIdx === 4 && idx === 4 ? ' text-white placeholder:text-white' : 'placeholder:text-zinc-500'}
-    `}
+        ${
+          tIdx === 4 && idx === 4
+            ? 'text-white placeholder:text-white'
+            : 'placeholder:text-zinc-500'
+        }`}
         value={content}
         placeholder={placeholder}
         spellCheck={false}
