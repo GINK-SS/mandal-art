@@ -1,7 +1,7 @@
 'use client';
 import { setActive, setContent } from '@/redux/slices/table';
 import { AppDispatch } from '@/redux/store';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 type ElementProps = {
@@ -15,6 +15,8 @@ export default function Element({ tIdx, idx, content, placeholder }: ElementProp
   const dispatch = useDispatch<AppDispatch>();
   const tdRef = useRef<HTMLTableCellElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const [isFocus, setIsFocus] = useState<boolean>(false);
+  const [isMouseDown, setIsMouseDown] = useState<boolean>(false);
 
   const handleTdClick = () => {
     if (textareaRef.current) textareaRef.current.focus();
@@ -53,6 +55,10 @@ export default function Element({ tIdx, idx, content, placeholder }: ElementProp
       ${tIdx === 4 && idx !== 4 && 'bg-purple-300'}
       ${tIdx !== 4 && idx === 4 && 'bg-purple-300 cursor-default'}`}
       onClick={handleTdClick}
+      onFocus={() => setIsFocus(true)}
+      onBlur={() => setIsFocus(false)}
+      onMouseDown={() => setIsMouseDown(true)}
+      onMouseUp={() => setIsMouseDown(false)}
     >
       <textarea
         ref={textareaRef}
@@ -64,7 +70,7 @@ export default function Element({ tIdx, idx, content, placeholder }: ElementProp
             : 'placeholder:text-zinc-500'
         }`}
         value={content}
-        placeholder={placeholder}
+        placeholder={isFocus || isMouseDown ? '' : placeholder}
         spellCheck={false}
         onChange={(e) => handleChange(e.target.value)}
         disabled={idx === 4 && tIdx !== 4}
