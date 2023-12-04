@@ -3,11 +3,15 @@ import { State } from '@/redux/store';
 import Table from './table';
 import TableWrapper from './tableWrapper';
 import { useSelector } from 'react-redux';
-import { useRef } from 'react';
+import { KeyboardEvent, useRef } from 'react';
 
 export default function Create() {
   const project = useSelector((state: State) => state.tableReducer);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  const preventKeyDownEnter = (e: KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === 'Enter') e.preventDefault();
+  };
 
   const handleResizeHeight = () => {
     if (textareaRef.current) {
@@ -25,6 +29,8 @@ export default function Create() {
         placeholder="제목"
         spellCheck={false}
         onChange={handleResizeHeight}
+        onKeyDown={(e) => preventKeyDownEnter(e)}
+        maxLength={200}
       />
       <TableWrapper>
         {project.tables.map((table, tIdx) => (
