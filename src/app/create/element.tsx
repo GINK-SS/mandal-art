@@ -8,15 +8,26 @@ type ElementProps = {
   tIdx: number;
   idx: number;
   content: string;
+  isActive: boolean;
   placeholder?: string;
 };
 
-export default function Element({ tIdx, idx, content, placeholder }: ElementProps) {
+export default function Element({ tIdx, idx, content, isActive, placeholder }: ElementProps) {
   const dispatch = useDispatch<AppDispatch>();
   const tdRef = useRef<HTMLTableCellElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [isFocus, setIsFocus] = useState<boolean>(false);
   const [isMouseDown, setIsMouseDown] = useState<boolean>(false);
+  const rotateVariants = new Map([
+    [0, 'rotate-[135deg]'],
+    [1, 'rotate-180'],
+    [2, '-rotate-[135deg]'],
+    [3, 'rotate-90'],
+    [5, '-rotate-90'],
+    [6, 'rotate-45'],
+    [7, 'rotate-0'],
+    [8, '-rotate-45'],
+  ]);
 
   const isOverHeight = (textarea: HTMLTextAreaElement, td: HTMLTableCellElement) => {
     const textareaHeight = textarea.scrollHeight;
@@ -61,20 +72,33 @@ export default function Element({ tIdx, idx, content, placeholder }: ElementProp
   return (
     <td
       ref={tdRef}
-      className={`flex items-center justify-center border border-gray-400 cursor-text after:pt-[100%]
-      ${tIdx === 4 && idx === 4 && 'bg-indigo-500'}
-      ${tIdx === 4 && idx !== 4 && 'bg-purple-300'}
-      ${tIdx !== 4 && idx === 4 && 'bg-purple-300 cursor-default'}`}
+      className={`relative flex items-center justify-center w-full p-px border border-dashed border-gray-400 after:pt-[100%]
+      ${idx <= 2 && 'border-t-0'}
+      ${idx >= 6 && 'border-b-0'}
+      ${idx % 3 === 0 && 'border-l-0'}
+      ${idx % 3 === 2 && 'border-r-0'}
+      ${tIdx === 4 && idx === 4 && 'bg-indigo-500 text-xl font-bold'}
+      ${tIdx === 4 && idx !== 4 && 'bg-purple-300 font-semibold'}
+      ${tIdx !== 4 && idx === 4 ? 'bg-purple-300 font-semibold cursor-default' : 'cursor-text'}`}
       onClick={handleTdClick}
       onFocus={() => setIsFocus(true)}
       onBlur={() => setIsFocus(false)}
       onMouseDown={() => setIsMouseDown(true)}
       onMouseUp={() => setIsMouseDown(false)}
     >
+      {tIdx !== 4 && tIdx + idx === 8 && isActive && (
+        <div className={`absolute -z-10 w-full ${rotateVariants.get(tIdx)} fill-purple-300`}>
+          <svg data-name="arrow-bottom" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+            <path d="M2.38 7h12l-6 7-6-7z" />
+            <path d="M10.37 8.11h-4v-6h4z" />
+          </svg>
+        </div>
+      )}
+
       <textarea
         ref={textareaRef}
         rows={1}
-        className={`w-full text-center resize-none outline-0 bg-transparent
+        className={`w-full text-center resize-none outline-0 bg-transparent leading-6
         ${
           tIdx === 4 && idx === 4
             ? 'text-white placeholder:text-white'
