@@ -12,8 +12,8 @@ export default function Table({ tIdx, isActive, elements }: TableProps) {
     <div className="relative">
       <div className={`absolute z-10 w-full h-full bg-black opacity-30 ${isActive && 'hidden'}`} />
 
-      <table className="border-2 border-collapse border-gray-500">
-        <tbody className="border-collapse">
+      <table className="border-2 border-collapse border-gray-900">
+        <tbody>
           {elements.map(
             (_, i) =>
               i % 3 === 0 && (
@@ -24,6 +24,7 @@ export default function Table({ tIdx, isActive, elements }: TableProps) {
                       tIdx={tIdx}
                       idx={idx + i}
                       content={element.content}
+                      isActive={isActive}
                       placeholder={element.placeholder}
                     />
                   ))}
