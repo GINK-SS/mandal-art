@@ -21,17 +21,18 @@ export default function Create() {
   };
 
   return (
-    <div>
+    <div className="pt-24">
       <textarea
         ref={textareaRef}
         rows={1}
-        className="w-full px-4 pb-2 mb-2 text-3xl font-medium border-b border-gray-300 outline-none resize-none focus:border-indigo-500"
-        placeholder="제목"
+        className="w-full px-4 pb-2 mb-2 text-3xl font-medium border-b-2 outline-none resize-none hover:border-gray-300 focus:border-gray-500"
+        placeholder="만다라트 제목"
         spellCheck={false}
         onChange={handleResizeHeight}
         onKeyDown={(e) => preventKeyDownEnter(e)}
         maxLength={200}
       />
+
       <TableWrapper>
         {project.tables.map((table, tIdx) => (
           <Table key={tIdx} tIdx={tIdx} isActive={table.isActive} elements={table.elements} />
