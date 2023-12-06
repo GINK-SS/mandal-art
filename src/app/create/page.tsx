@@ -1,13 +1,15 @@
 'use client';
-import { State } from '@/redux/store';
+import { AppDispatch, State } from '@/redux/store';
 import Table from './table';
 import TableWrapper from './tableWrapper';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { KeyboardEvent, useRef } from 'react';
 import Link from 'next/link';
+import { setTitle } from '@/redux/slices/table';
 
 export default function Create() {
   const project = useSelector((state: State) => state.tableReducer);
+  const dispatch = useDispatch<AppDispatch>();
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const preventKeyDownEnter = (e: KeyboardEvent<HTMLTextAreaElement>) => {
@@ -21,15 +23,21 @@ export default function Create() {
     }
   };
 
+  const handleChange = (value: string) => {
+    dispatch(setTitle({ title: value }));
+    handleResizeHeight();
+  };
+
   return (
     <div className="pt-24">
       <textarea
         ref={textareaRef}
         rows={1}
+        value={project.title}
         className="w-full px-4 pb-2 mb-2 text-3xl font-medium border-b-2 outline-none resize-none hover:border-gray-300 focus:border-gray-500"
         placeholder="만다라트 제목"
         spellCheck={false}
-        onChange={handleResizeHeight}
+        onChange={(e) => handleChange(e.target.value)}
         onKeyDown={(e) => preventKeyDownEnter(e)}
         maxLength={200}
       />
