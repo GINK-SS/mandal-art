@@ -78,8 +78,12 @@ export default function Element({ tIdx, idx, content, isActive, placeholder }: E
       ${idx % 3 === 0 && 'border-l-0'}
       ${idx % 3 === 2 && 'border-r-0'}
       ${tIdx === 4 && idx === 4 && 'bg-indigo-500 text-xl font-bold'}
-      ${tIdx === 4 && idx !== 4 && 'bg-purple-300 font-semibold'}
-      ${tIdx !== 4 && idx === 4 ? 'bg-purple-300 font-semibold cursor-default' : 'cursor-text'}`}
+      ${tIdx === 4 && idx !== 4 && 'bg-purple-300 text-lg font-semibold'}
+      ${
+        tIdx !== 4 && idx === 4
+          ? 'bg-purple-300 text-lg font-semibold cursor-default'
+          : 'cursor-text'
+      }`}
       onClick={handleTdClick}
       onFocus={() => setIsFocus(true)}
       onBlur={() => setIsFocus(false)}
