@@ -151,7 +151,9 @@ export const table = createSlice({
   name: 'table',
   initialState,
   reducers: {
-    setTitle: (state, action: PayloadAction<{ title: string }>) => {},
+    setTitle: (state, action: PayloadAction<{ title: string }>) => {
+      state.title = action.payload.title;
+    },
 
     setContent: (state, action: PayloadAction<{ tIdx: number; idx: number; content: string }>) => {
       state.tables[action.payload.tIdx].elements[action.payload.idx].content =
