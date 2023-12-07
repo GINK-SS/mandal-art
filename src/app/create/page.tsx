@@ -57,7 +57,6 @@ export default function Create() {
           </button>
         </Link>
       </div>
-      <a href="https://www.gink-ss.com" />
     </div>
   );
 }
