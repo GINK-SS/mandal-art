@@ -102,7 +102,7 @@ export default function Element({ tIdx, idx, content, isActive, placeholder }: E
       <textarea
         ref={textareaRef}
         rows={1}
-        className={`w-full text-center resize-none outline-0 bg-transparent leading-6
+        className={`w-full text-center resize-none outline-none bg-transparent leading-6
         ${
           tIdx === 4 && idx === 4
             ? 'text-white placeholder:text-white'
