@@ -13,9 +13,19 @@ const config: Config = {
           '0%': { backgroundPosition: '0% center' },
           '100%': { backgroundPosition: '400% center' },
         },
+        modalDown: {
+          '0%': { transform: 'translateY(-10px)' },
+          '100%': { transform: 'translateY(0)' },
+        },
+        fadeIn: {
+          '0%': { opacity: '0%' },
+          '100%': { opacity: '100%' },
+        },
       },
       animation: {
         bgGradient: 'bgGradient 14s linear infinite',
+        modalDown: 'modalDown 0.2s ease',
+        fadeIn: 'fadeIn 0.2s ease',
       },
       backgroundImage: {
         'gradient-90': 'linear-gradient(90deg, var(--tw-gradient-stops))',
