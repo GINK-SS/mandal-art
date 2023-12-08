@@ -3,10 +3,10 @@ import { AppDispatch, State } from '@/redux/store';
 import Table from './table';
 import TableWrapper from './tableWrapper';
 import { useDispatch, useSelector } from 'react-redux';
-import { KeyboardEvent, useRef } from 'react';
+import { KeyboardEvent, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import { setTitle } from '@/redux/slices/table';
-import html2canvas from 'html2canvas';
+import { toPng } from 'html-to-image';
 
 export default function Create() {
   const project = useSelector((state: State) => state.tableReducer);
@@ -30,18 +30,20 @@ export default function Create() {
     handleResizeHeight();
   };
 
-  const handleButtonClick = async () => {
-    if (printRef.current) {
-      await html2canvas(printRef.current, { scale: 4 }).then((canvas) => {
-        const image = canvas.toDataURL('image/png');
-        const downloadLink = document.createElement('a');
+  const handleButtonClick = useCallback(() => {
+    if (printRef.current === null) return;
 
-        downloadLink.href = image;
-        downloadLink.download = `${project.title ? project.title : '만다라트'}.png`;
-        downloadLink.click();
-      });
-    }
-  };
+    toPng(printRef.current, { cacheBust: true, backgroundColor: '#FFF' })
+      .then((dataUrl) => {
+        const link = document.createElement('a');
+
+        link.download = project.title ? project.title : '만다라트';
+        link.href = dataUrl;
+        link.click();
+        link.remove();
+      })
+      .catch((err) => console.log(err));
+  }, [project.title]);
 
   return (
     <div className="pt-24">
