@@ -8,7 +8,7 @@ import Link from 'next/link';
 import { setTitle } from '@/redux/slices/table';
 import { toPng } from 'html-to-image';
 import Modal from '../modal';
-import { setActive, setInactive } from '@/redux/slices/modal';
+import { setActive, setInactive, setQuestion } from '@/redux/slices/modal';
 import Button from './button';
 
 export default function Create() {
@@ -40,6 +40,7 @@ export default function Create() {
   };
 
   const handlePrintButtonClick = () => {
+    dispatch(setQuestion({ question: '이미지로 출력하시겠습니까?' }));
     dispatch(setActive());
   };
 
@@ -71,7 +72,7 @@ export default function Create() {
     <>
       {modal.isActive && (
         <Modal
-          question="이미지로 출력하시겠습니까?"
+          question={modal.question}
           handleOuterClick={handleOuterClick}
           handleOKButtonClick={handleOKButtonClick}
           handleCancelButtonClick={handleCancelClick}
