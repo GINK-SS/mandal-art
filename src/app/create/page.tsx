@@ -29,6 +29,23 @@ export default function Create() {
     setIsLoading(false);
   }, [dispatch]);
 
+  useEffect(() => {
+    handleResizeHeight();
+  }, [project.title]);
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout | undefined;
+
+    window.addEventListener('resize', () => {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        handleResizeHeight();
+      }, 100);
+    });
+
+    return () => window.removeEventListener('resize', handleResizeHeight);
+  }, []);
+
   const preventKeyDownEnter = (e: KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter') e.preventDefault();
   };
@@ -42,7 +59,6 @@ export default function Create() {
 
   const handleChange = (value: string) => {
     dispatch(setTitle({ title: value }));
-    handleResizeHeight();
   };
 
   const handleOuterClick = (e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>) => {
@@ -119,7 +135,7 @@ export default function Create() {
             name="textarea"
             rows={1}
             value={project.title}
-            className="flex-1 px-4 pb-2 mr-5 text-3xl font-medium border-b-2 outline-none resize-none hover:border-gray-300 focus:border-gray-500"
+            className="flex-1 pl-2 pb-0.5 mr-1 text-base font-medium border-b-2 outline-none resize-none sm:pb-1 sm:mr-3 md:mr-5 sm:pl-4 sm:text-2xl md:text-3xl hover:border-gray-300 focus:border-gray-500"
             placeholder="만다라트 제목"
             spellCheck={false}
             onChange={(e) => handleChange(e.target.value)}
@@ -164,10 +180,10 @@ export default function Create() {
             ))}
           </TableWrapper>
 
-          <div className="relative w-full mt-2">
+          <div className="relative w-full mt-1 sm:mt-2">
             <Link href="https://www.gink-ss.com" target="_blank">
-              <button className="absolute right-0 inline-flex items-center justify-center p-px text-xs text-gray-700 shadow-md rounded-2xl group bg-gradient-to-br from-purple-300 to-indigo-500">
-                <span className="px-2 py-1 transition-all duration-75 ease-in bg-white rounded-2xl group-hover:bg-slate-50">
+              <button className="absolute right-0 inline-flex items-center justify-center p-px text-[0.5rem] sm:text-xs text-gray-700 shadow-md rounded-2xl group bg-gradient-to-br from-purple-300 to-indigo-500">
+                <span className="px-1 sm:px-2 py-0.5 sm:py-1 transition-all duration-75 ease-in bg-white rounded-2xl group-hover:bg-slate-50">
                   @ GINK-SS
                 </span>
               </button>

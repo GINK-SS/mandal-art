@@ -19,9 +19,9 @@ export default function Modal({
       onClick={(e) => handleOuterClick(e)}
     >
       <div className="bg-white border border-black rounded-lg shadow animate-modalDown">
-        <div className="px-16 py-8 text-center">
+        <div className="px-10 py-6 text-center sm:px-16 sm:py-8">
           <svg
-            className="w-6 h-6 mx-auto mb-4 text-gray-400"
+            className="w-4 h-4 mx-auto mb-4 text-gray-400 sm:w-6 sm:h-6"
             aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -36,19 +36,21 @@ export default function Modal({
             />
           </svg>
 
-          <h3 className="mb-5 text-lg font-normal text-gray-500">{question}</h3>
+          <h3 className="mb-5 text-xs font-normal text-gray-500 sm:text-base md:text-lg">
+            {question}
+          </h3>
 
           <button
             onClick={handleOKButtonClick}
             type="button"
-            className="text-white bg-indigo-500 hover:bg-indigo-600 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-6"
+            className="text-white bg-indigo-500 hover:bg-indigo-600 font-medium rounded-lg text-xs md:text-sm inline-flex items-center px-3 sm:px-5 py-2 sm:py-2.5 text-center mr-6"
           >
             확인
           </button>
           <button
             onClick={handleCancelButtonClick}
             type="button"
-            className="text-gray-500 bg-white hover:bg-gray-100 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900"
+            className="text-gray-500 bg-white hover:bg-gray-100 rounded-lg border border-gray-200 text-xs md:text-sm font-medium px-3 sm:px-5 py-2 sm:py-2.5 hover:text-gray-900"
           >
             취소
           </button>
