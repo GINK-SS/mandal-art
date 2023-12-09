@@ -12,7 +12,7 @@ export default function Table({ tIdx, isActive, elements }: TableProps) {
     <div className="relative">
       <div className={`absolute z-10 w-full h-full bg-black opacity-30 ${isActive && 'hidden'}`} />
 
-      <table className="border-2 border-collapse border-gray-900">
+      <table className="border border-collapse border-gray-900 md:border-2">
         <tbody>
           {elements.map(
             (_, i) =>

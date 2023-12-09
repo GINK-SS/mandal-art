@@ -1,7 +1,7 @@
 'use client';
-import { setActive, setContent } from '@/redux/slices/table';
+import { setActive, setContent, setLocalStorage } from '@/redux/slices/table';
 import { AppDispatch } from '@/redux/store';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 type ElementProps = {
@@ -28,6 +28,23 @@ export default function Element({ tIdx, idx, content, isActive, placeholder }: E
     [7, 'rotate-0'],
     [8, '-rotate-45'],
   ]);
+
+  useEffect(() => {
+    handleResizeHeight();
+  }, [textareaRef.current]);
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout | undefined;
+
+    window.addEventListener('resize', () => {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        handleResizeHeight();
+      }, 100);
+    });
+
+    return () => window.removeEventListener('resize', handleResizeHeight);
+  }, []);
 
   const isOverHeight = (textarea: HTMLTextAreaElement, td: HTMLTableCellElement) => {
     const textareaHeight = textarea.scrollHeight;
@@ -69,19 +86,31 @@ export default function Element({ tIdx, idx, content, isActive, placeholder }: E
     handleResizeHeight();
   };
 
+  const saveToLocalStorage = () => {
+    dispatch(setLocalStorage());
+  };
+
   return (
     <td
       ref={tdRef}
-      className={`relative flex items-center justify-center w-full p-px border border-dashed border-gray-400 after:pt-[100%]
+      className={`relative flex items-center justify-center w-full p-px border border-dashed text-[0.4rem] sm:text-xs md:text-sm lg:text-lg border-gray-400 after:pt-[100%]
       ${idx <= 2 && 'border-t-0'}
       ${idx >= 6 && 'border-b-0'}
       ${idx % 3 === 0 && 'border-l-0'}
       ${idx % 3 === 2 && 'border-r-0'}
-      ${tIdx === 4 && idx === 4 && 'bg-indigo-500 text-xl font-bold'}
-      ${tIdx === 4 && idx !== 4 && 'bg-purple-300 text-lg font-semibold'}
+      ${
+        tIdx === 4 &&
+        idx === 4 &&
+        'bg-indigo-500 text-[0.42rem] sm:text-[0.65rem] md:text-sm lg:text-xl font-bold'
+      }
+      ${
+        tIdx === 4 &&
+        idx !== 4 &&
+        'bg-purple-300 text-[0.42rem] sm:text-xs md:text-sm lg:text-lg font-semibold'
+      }
       ${
         tIdx !== 4 && idx === 4
-          ? 'bg-purple-300 text-lg font-semibold cursor-default'
+          ? 'bg-purple-300 text-[0.42rem] sm:text-xs md:text-sm lg:text-lg font-semibold cursor-default'
           : 'cursor-text'
       }`}
       onClick={handleTdClick}
@@ -101,8 +130,9 @@ export default function Element({ tIdx, idx, content, isActive, placeholder }: E
 
       <textarea
         ref={textareaRef}
+        name="textarea"
         rows={1}
-        className={`w-full text-center resize-none outline-none bg-transparent leading-6
+        className={`w-full text-center resize-none outline-none bg-transparent leading-[0.5rem] sm:leading-[0.9rem] md:leading-4 lg:leading-6
         ${
           tIdx === 4 && idx === 4
             ? 'text-white placeholder:text-white'
@@ -112,6 +142,7 @@ export default function Element({ tIdx, idx, content, isActive, placeholder }: E
         placeholder={isFocus || isMouseDown ? '' : placeholder}
         spellCheck={false}
         onChange={(e) => handleChange(e.target.value)}
+        onBlur={saveToLocalStorage}
         disabled={idx === 4 && tIdx !== 4}
       />
     </td>
