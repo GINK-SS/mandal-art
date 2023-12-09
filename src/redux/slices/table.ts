@@ -177,6 +177,7 @@ export const table = createSlice({
     initialize: (state) => {
       state.title = initialState.title;
       state.tables = initialState.tables;
+      window.localStorage.removeItem('elements');
     },
 
     setLocalStorage: (state) => {
