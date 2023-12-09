@@ -173,9 +173,14 @@ export const table = createSlice({
         }
       }
     },
+
+    initialize: (state) => {
+      state.title = initialState.title;
+      state.tables = initialState.tables;
+    },
   },
 });
 
-export const { setTitle, setContent, setActive } = table.actions;
+export const { setTitle, setContent, setActive, initialize } = table.actions;
 
 export default table.reducer;

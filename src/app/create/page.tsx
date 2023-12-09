@@ -5,10 +5,10 @@ import TableWrapper from './tableWrapper';
 import { useDispatch, useSelector } from 'react-redux';
 import { KeyboardEvent, MouseEvent, useCallback, useRef, useState } from 'react';
 import Link from 'next/link';
-import { setTitle } from '@/redux/slices/table';
+import { initialize, setTitle } from '@/redux/slices/table';
 import { toPng } from 'html-to-image';
 import Modal from '../modal';
-import { setActive, setInactive, setQuestion } from '@/redux/slices/modal';
+import { QTypes, setActive, setInactive, setQuestion } from '@/redux/slices/modal';
 import Button from './button';
 
 export default function Create() {
@@ -40,15 +40,39 @@ export default function Create() {
   };
 
   const handlePrintButtonClick = () => {
-    dispatch(setQuestion({ question: '이미지로 출력하시겠습니까?' }));
+    dispatch(setQuestion({ qType: QTypes.PRINT, question: '이미지로 출력하시겠습니까?' }));
     dispatch(setActive());
   };
 
-  const handleCancelClick = () => {
+  const handleResetButtonClick = () => {
+    dispatch(
+      setQuestion({ qType: QTypes.RESET, question: '입력하신 내용을 모두 삭제하시겠습니까?' })
+    );
+    dispatch(setActive());
+  };
+
+  const handleCancelButtonClick = () => {
     dispatch(setInactive());
   };
 
-  const handleOKButtonClick = useCallback(() => {
+  const handleOKButtonClick = () => {
+    switch (modal.qType) {
+      case QTypes.RESET:
+        reset();
+        break;
+      case QTypes.PRINT:
+        printToPng();
+        break;
+    }
+
+    dispatch(setInactive());
+  };
+
+  const reset = () => {
+    dispatch(initialize());
+  };
+
+  const printToPng = useCallback(() => {
     if (printRef.current === null) return;
 
     setIsdownloading(true);
@@ -64,9 +88,7 @@ export default function Create() {
       })
       .then(() => setIsdownloading(false))
       .catch((err) => console.log(err));
-
-    dispatch(setInactive());
-  }, [dispatch, project.title]);
+  }, [project.title]);
 
   return (
     <>
@@ -75,7 +97,7 @@ export default function Create() {
           question={modal.question}
           handleOuterClick={handleOuterClick}
           handleOKButtonClick={handleOKButtonClick}
-          handleCancelButtonClick={handleCancelClick}
+          handleCancelButtonClick={handleCancelButtonClick}
         />
       )}
 
@@ -94,6 +116,7 @@ export default function Create() {
             maxLength={80}
           />
 
+          <Button onClick={handleResetButtonClick} disabled={isDownloading} text="초기화" />
           <Button onClick={handlePrintButtonClick} disabled={isDownloading} text="출력하기" />
         </div>
 
