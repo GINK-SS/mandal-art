@@ -34,7 +34,14 @@ export default function Create() {
   }, [project.title]);
 
   useEffect(() => {
-    window.addEventListener('resize', handleResizeHeight);
+    let timer: NodeJS.Timeout | undefined;
+
+    window.addEventListener('resize', () => {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        handleResizeHeight();
+      }, 100);
+    });
 
     return () => window.removeEventListener('resize', handleResizeHeight);
   }, []);
@@ -52,7 +59,6 @@ export default function Create() {
 
   const handleChange = (value: string) => {
     dispatch(setTitle({ title: value }));
-    handleResizeHeight();
   };
 
   const handleOuterClick = (e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>) => {

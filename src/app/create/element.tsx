@@ -34,7 +34,14 @@ export default function Element({ tIdx, idx, content, isActive, placeholder }: E
   }, [textareaRef.current]);
 
   useEffect(() => {
-    window.addEventListener('resize', handleResizeHeight);
+    let timer: NodeJS.Timeout | undefined;
+
+    window.addEventListener('resize', () => {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        handleResizeHeight();
+      }, 100);
+    });
 
     return () => window.removeEventListener('resize', handleResizeHeight);
   }, []);
