@@ -101,6 +101,7 @@ export default function Element({ tIdx, idx, content, isActive, placeholder }: E
 
       <textarea
         ref={textareaRef}
+        name="textarea"
         rows={1}
         className={`w-full text-center resize-none outline-none bg-transparent leading-6
         ${

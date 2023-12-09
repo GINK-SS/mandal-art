@@ -81,6 +81,7 @@ export default function Create() {
         <div className="flex items-center mb-2">
           <textarea
             ref={textareaRef}
+            name="textarea"
             rows={1}
             value={project.title}
             className="flex-1 px-4 pb-2 mr-10 text-3xl font-medium border-b-2 outline-none resize-none hover:border-gray-300 focus:border-gray-500"
