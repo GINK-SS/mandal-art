@@ -38,7 +38,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="ko">
       <body suppressHydrationWarning={true}>
         <ReduxProvider>
-          <div className="h-full max-w-5xl px-4 mx-auto">{children}</div>
+          <div className="h-full max-w-5xl px-1 mx-auto sm:px-2 md:px-4">{children}</div>
         </ReduxProvider>
       </body>
     </html>
