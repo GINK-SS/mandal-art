@@ -135,7 +135,7 @@ export default function Create() {
             name="textarea"
             rows={1}
             value={project.title}
-            className="flex-1 px-2 pb-0.5 mr-1 text-base font-medium border-b-2 outline-none resize-none sm:pb-1 sm:mr-3 md:mr-5 sm:px-4 sm:text-2xl md:text-3xl hover:border-gray-300 focus:border-gray-500"
+            className="flex-1 pl-2 pb-0.5 mr-1 text-base font-medium border-b-2 outline-none resize-none sm:pb-1 sm:mr-3 md:mr-5 sm:pl-4 sm:text-2xl md:text-3xl hover:border-gray-300 focus:border-gray-500"
             placeholder="만다라트 제목"
             spellCheck={false}
             onChange={(e) => handleChange(e.target.value)}
