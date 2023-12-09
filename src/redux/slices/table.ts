@@ -178,9 +178,21 @@ export const table = createSlice({
       state.title = initialState.title;
       state.tables = initialState.tables;
     },
+
+    setLocalStorage: (state) => {
+      window.localStorage.setItem('elements', JSON.stringify(state));
+    },
+
+    getLocalStorage: (state, action: PayloadAction<{ saved: string }>) => {
+      const parseSaved: ProjectState = JSON.parse(action.payload.saved);
+
+      state.title = parseSaved.title;
+      state.tables = parseSaved.tables;
+    },
   },
 });
 
-export const { setTitle, setContent, setActive, initialize } = table.actions;
+export const { setTitle, setContent, setActive, initialize, setLocalStorage, getLocalStorage } =
+  table.actions;
 
 export default table.reducer;

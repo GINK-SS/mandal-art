@@ -1,5 +1,5 @@
 'use client';
-import { setActive, setContent } from '@/redux/slices/table';
+import { setActive, setContent, setLocalStorage } from '@/redux/slices/table';
 import { AppDispatch } from '@/redux/store';
 import { useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -69,6 +69,10 @@ export default function Element({ tIdx, idx, content, isActive, placeholder }: E
     handleResizeHeight();
   };
 
+  const saveToLocalStorage = () => {
+    dispatch(setLocalStorage());
+  };
+
   return (
     <td
       ref={tdRef}
@@ -113,6 +117,7 @@ export default function Element({ tIdx, idx, content, isActive, placeholder }: E
         placeholder={isFocus || isMouseDown ? '' : placeholder}
         spellCheck={false}
         onChange={(e) => handleChange(e.target.value)}
+        onBlur={saveToLocalStorage}
         disabled={idx === 4 && tIdx !== 4}
       />
     </td>

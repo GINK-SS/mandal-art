@@ -3,9 +3,9 @@ import { AppDispatch, State } from '@/redux/store';
 import Table from './table';
 import TableWrapper from './tableWrapper';
 import { useDispatch, useSelector } from 'react-redux';
-import { KeyboardEvent, MouseEvent, useCallback, useRef, useState } from 'react';
+import { KeyboardEvent, MouseEvent, useCallback, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { initialize, setTitle } from '@/redux/slices/table';
+import { getLocalStorage, initialize, setLocalStorage, setTitle } from '@/redux/slices/table';
 import { toPng } from 'html-to-image';
 import Modal from '../modal';
 import { QTypes, setActive, setInactive, setQuestion } from '@/redux/slices/modal';
@@ -18,6 +18,14 @@ export default function Create() {
   const dispatch = useDispatch<AppDispatch>();
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const printRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const saved = localStorage.getItem('elements');
+
+    if (saved) {
+      dispatch(getLocalStorage({ saved }));
+    }
+  }, [dispatch]);
 
   const preventKeyDownEnter = (e: KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter') e.preventDefault();
@@ -90,6 +98,10 @@ export default function Create() {
       .catch((err) => console.log(err));
   }, [project.title]);
 
+  const saveToLocalStorage = () => {
+    dispatch(setLocalStorage());
+  };
+
   return (
     <>
       {modal.isActive && (
@@ -113,6 +125,7 @@ export default function Create() {
             spellCheck={false}
             onChange={(e) => handleChange(e.target.value)}
             onKeyDown={(e) => preventKeyDownEnter(e)}
+            onBlur={saveToLocalStorage}
             maxLength={80}
           />
 
