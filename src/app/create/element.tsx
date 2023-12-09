@@ -1,7 +1,7 @@
 'use client';
 import { setActive, setContent, setLocalStorage } from '@/redux/slices/table';
 import { AppDispatch } from '@/redux/store';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 type ElementProps = {
@@ -28,6 +28,16 @@ export default function Element({ tIdx, idx, content, isActive, placeholder }: E
     [7, 'rotate-0'],
     [8, '-rotate-45'],
   ]);
+
+  useEffect(() => {
+    handleResizeHeight();
+  }, [textareaRef.current]);
+
+  useEffect(() => {
+    window.addEventListener('resize', handleResizeHeight);
+
+    return () => window.removeEventListener('resize', handleResizeHeight);
+  }, []);
 
   const isOverHeight = (textarea: HTMLTextAreaElement, td: HTMLTableCellElement) => {
     const textareaHeight = textarea.scrollHeight;

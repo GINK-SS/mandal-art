@@ -29,6 +29,16 @@ export default function Create() {
     setIsLoading(false);
   }, [dispatch]);
 
+  useEffect(() => {
+    handleResizeHeight();
+  }, [project.title]);
+
+  useEffect(() => {
+    window.addEventListener('resize', handleResizeHeight);
+
+    return () => window.removeEventListener('resize', handleResizeHeight);
+  }, []);
+
   const preventKeyDownEnter = (e: KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter') e.preventDefault();
   };
