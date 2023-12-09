@@ -3,7 +3,7 @@ import { AppDispatch, State } from '@/redux/store';
 import Table from './table';
 import TableWrapper from './tableWrapper';
 import { useDispatch, useSelector } from 'react-redux';
-import { KeyboardEvent, useCallback, useRef, useState } from 'react';
+import { KeyboardEvent, MouseEvent, useCallback, useRef, useState } from 'react';
 import Link from 'next/link';
 import { setTitle } from '@/redux/slices/table';
 import { toPng } from 'html-to-image';
@@ -32,6 +32,10 @@ export default function Create() {
   const handleChange = (value: string) => {
     dispatch(setTitle({ title: value }));
     handleResizeHeight();
+  };
+
+  const handleOuterClick = (e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>) => {
+    if (e.target === e.currentTarget) dispatch(setInactive());
   };
 
   const handlePrintButtonClick = () => {
@@ -67,6 +71,7 @@ export default function Create() {
       {modal.isActive && (
         <Modal
           question="이미지로 출력하시겠습니까?"
+          handleOuterClick={handleOuterClick}
           handleOKButtonClick={handleOKButtonClick}
           handleCancelButtonClick={handleCancelClick}
         />

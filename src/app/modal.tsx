@@ -1,16 +1,23 @@
+import { MouseEvent } from 'react';
+
 type ModalProps = {
   question: string;
+  handleOuterClick: (e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>) => void;
   handleOKButtonClick: () => void;
   handleCancelButtonClick: () => void;
 };
 
 export default function Modal({
   question,
+  handleOuterClick,
   handleOKButtonClick,
   handleCancelButtonClick,
 }: ModalProps) {
   return (
-    <div className="fixed top-0 bottom-0 left-0 right-0 z-20 flex items-center justify-center overflow-y-scroll bg-black bg-opacity-10 backdrop-blur-[2px] animate-fadeIn">
+    <div
+      className="fixed top-0 bottom-0 left-0 right-0 z-20 flex items-center justify-center overflow-y-scroll bg-black bg-opacity-10 backdrop-blur-[2px] animate-fadeIn"
+      onClick={(e) => handleOuterClick(e)}
+    >
       <div className="bg-white border border-black rounded-lg shadow animate-modalDown">
         <div className="px-16 py-8 text-center">
           <svg
