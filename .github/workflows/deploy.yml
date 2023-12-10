@@ -46,6 +46,10 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         run: aws s3 sync --region ap-northeast-2 ./out s3://mandalart --delete
 
+      # .html 확장자 제거
+      - name: Remove .html file extension
+        run: for file in $(find ./out -name "*.html"); do mv "$file" "${file%%.html}"; done
+
       # CloudFront 캐시 무효화
       - name: Invalidate CloudFront Cache
         run: aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_DISTRIBUTION_ID }} --paths "/*"
