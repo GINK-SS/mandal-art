@@ -132,6 +132,7 @@ export default function Element({ tIdx, idx, content, isActive, placeholder }: E
         ref={textareaRef}
         name="textarea"
         rows={1}
+        style={{ WebkitTextFillColor: idx === 4 && tIdx !== 4 ? '#000' : '' }}
         className={`w-full text-center resize-none outline-none bg-transparent leading-[0.5rem] sm:leading-[0.9rem] md:leading-4 lg:leading-6
         ${
           tIdx === 4 && idx === 4
