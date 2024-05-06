@@ -4,10 +4,11 @@
 
 <br />
 
-<div style="display:flex; flex-direction:column; align-items:center">
+<div align="center">
   <a href="https://mandalart.gink-ss.com">
     <img src="https://img.shields.io/badge/📝-만다라트_만들기-6366F1?style=for-the-badge&labelColor=d8b4fe" width="200" />
   </a>
+  
   <i style="font-size:13px; opacity:0.5">클릭 시 페이지 이동</i>
 </div>
 
